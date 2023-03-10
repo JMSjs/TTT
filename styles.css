@@ -35,3 +35,11 @@ time, mark, audio, video {
     border-radius: 5px;
     background-color: lightgray;
 }
+
+.X {
+    background-color: orange;
+}
+
+.O {
+    background-color: teal;
+}
