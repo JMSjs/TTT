@@ -16,6 +16,7 @@ const gameBoard = (() => {
             cell.style.pointerEvents = 'none';
             cell.classList.add(gameFlow.currentPlayer.marker);
             board[e.target.id] = gameFlow.currentPlayer.marker;
+            cell.innerText = gameFlow.currentPlayer.marker;
             console.log(`${gameFlow.currentPlayer.name} selected cell ${e.target.id}`);
             gameFlow.nextPlayer();
         });

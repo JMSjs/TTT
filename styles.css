@@ -36,10 +36,14 @@ time, mark, audio, video {
     background-color: lightgray;
 }
 
-.X {
-    background-color: orange;
+.cell:hover {
+    background-color: grey;
 }
 
-.O {
-    background-color: teal;
+.X, .O {
+    background-color: black;
+    color: white;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 100px;
 }
