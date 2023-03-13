@@ -12,17 +12,34 @@ const gameBoard = (() => {
         cell.classList.add('cell');
         cell.setAttribute('id', i); //unique number for every cell
         gameboard.appendChild(cell);
+        const cells = document.querySelectorAll('.cell');
         cell.addEventListener('click', (e) => {
             cell.style.pointerEvents = 'none';
             cell.classList.add(gameFlow.currentPlayer.marker);
             board[e.target.id] = gameFlow.currentPlayer.marker;
             cell.innerText = gameFlow.currentPlayer.marker;
             console.log(`${gameFlow.currentPlayer.name} selected cell ${e.target.id}`);
+            console.log(board);
             gameFlow.nextPlayer();
+            
         });
     }
+    let cells = document.querySelectorAll('.cell');
+
+    const clearBoard = () => {
+        board = [
+            '','','',
+            '','','',
+            '','',''
+        ];
+        cells.forEach((element) => {
+            element.style.pointerEvents = 'auto';
+            element.innerText = '';
+            element.classList.remove('X', 'O');
+        });  
+    }
     
-    return {board, gameboard}
+    return {board, gameboard, clearBoard};
 })();
 
 // Factory: Player objects constructor
@@ -57,8 +74,15 @@ const gameFlow = (() => {
         }
     };
 
-    return {
-        currentPlayer,
-        nextPlayer,
+    function resetGame() {
+        this.isGameOver = false;
+        this.currentPlayer = player1;
+        this.remainingCells = 9;
+        gameBoard.clearBoard();
     };
+
+    return {currentPlayer, nextPlayer, resetGame};
 })();
+
+const reset = document.querySelector('.buttons');
+reset.addEventListener('click', gameFlow.resetGame);
