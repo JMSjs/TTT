@@ -48,7 +48,8 @@ h1 {
     overflow: hidden;
 }
 
-.cell:hover {
+.cell:hover,
+.buttons:hover {
     background-color: grey;
     transition: 100ms;
 }
@@ -62,15 +63,14 @@ h1 {
 }
 
 .buttons {
-    margin: 30px;
+    margin: 20px auto;
     padding: 10px;
-    width: 60px;
-    height: 30px;
-    font-size: large;
+    width: 120px;
+    height: 20px;
+    font-size: 1em;
     border-radius: 8px;
     background-color: lightgray;
     text-align: center;
-    vertical-align:baseline;
 }
 
 .hidden {
@@ -83,4 +83,10 @@ h1 {
 
 img {
     max-width: 100%;
+}
+.messages {
+    font-size: 2em;
+    margin: 20px auto;
+    text-align: center;
+
 }

@@ -8,6 +8,7 @@ const gameBoard = (() => {
     const gameboard = document.querySelector('.gameboard');
     
     for (i = 0; i < board.length; i++) {
+        
         const cell = document.createElement('div');
         cell.classList.add('cell');
         cell.setAttribute('id', i); //unique number for every cell
@@ -37,7 +38,16 @@ const gameBoard = (() => {
             // cell.innerText = gameFlow.currentPlayer.marker;
             console.log(`${gameFlow.currentPlayer.name} selected cell ${e.target.id}`);
             console.log(board);
-            gameFlow.nextPlayer();
+            gameFlow.checkWinner();
+            if (gameFlow.isGameOver) {
+                document.querySelectorAll('.cell').forEach((element) => {
+                    console.log(`cell ${element.id} is locked.`)
+                    element.style.pointerEvents = 'none';
+                });
+            } else {
+                gameFlow.nextPlayer();
+                domFeatures.displayMessage(`${gameFlow.currentPlayer.name}'s turn.`);
+            }
             
         });
     }
@@ -45,7 +55,7 @@ const gameBoard = (() => {
     let cells = document.querySelectorAll('.cell');
     let imgs = document.querySelectorAll('img');
     const clearBoard = () => {
-        board = [
+        gameBoard.board = [
             '','','',
             '','','',
             '','',''
@@ -94,17 +104,50 @@ const gameFlow = (() => {
         } else {
             this.currentPlayer = player1;
         }
-    };
+    }
 
     function resetGame() {
-        this.isGameOver = false;
-        currentPlayer = player1;
+        isGameOver = false;
+        this.currentPlayer = player1;
         this.remainingCells = 9;
+        domFeatures.displayMessage(`${this.currentPlayer.name}'s turn.`);
         gameBoard.clearBoard();
-    };
+    }
 
-    return {currentPlayer, nextPlayer, resetGame};
+    function checkWinner() {
+        winningRows.forEach((element, index) => {
+            if (gameBoard.board[element[0]] === this.currentPlayer.marker &&
+                gameBoard.board[element[1]] === this.currentPlayer.marker &&
+                gameBoard.board[element[2]] === this.currentPlayer.marker) {
+                    domFeatures.displayMessage(`${this.currentPlayer.name} is the winner!`);
+                    gameFlow.isGameOver = true;
+            }
+        })
+    }
+
+    return {currentPlayer, nextPlayer, resetGame, checkWinner, isGameOver};
 })();
 
-const reset = document.querySelector('.buttons');
-reset.addEventListener('click', gameFlow.resetGame);
+//Other DOM features
+const domFeatures = (() => {
+    const reset = document.querySelector('.buttons');
+    reset.addEventListener('click', gameFlow.resetGame);
+    
+    const messages = document.querySelector('.messages');
+
+    function displayMessage(string) {
+        clearMessages();
+        const message = document.createElement('p');
+        message.innerText = string;
+        messages.appendChild(message);
+    }
+
+    function clearMessages() {
+        while (messages.firstChild) {
+            messages.removeChild(messages.firstChild);
+        } 
+    }
+
+    return {displayMessage};
+
+})();
