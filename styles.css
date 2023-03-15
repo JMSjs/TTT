@@ -45,6 +45,7 @@ h1 {
     padding: 0;
     border-radius: 5px;
     background-color: lightgray;
+    overflow: hidden;
 }
 
 .cell:hover {
@@ -66,8 +67,20 @@ h1 {
     width: 60px;
     height: 30px;
     font-size: large;
-    border-radius: 5px;
+    border-radius: 8px;
     background-color: lightgray;
     text-align: center;
     vertical-align:baseline;
+}
+
+.hidden {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+img {
+    max-width: 100%;
 }

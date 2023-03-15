@@ -12,20 +12,38 @@ const gameBoard = (() => {
         cell.classList.add('cell');
         cell.setAttribute('id', i); //unique number for every cell
         gameboard.appendChild(cell);
+
+        const img1 = document.createElement('img');
+        img1.classList.add('hidden', 'rat1');
+        img1.setAttribute('src', "https://i.imgur.com/3cQkxGR.jpg");
+        cell.appendChild(img1);  
+        
+        const img2 = document.createElement('img');
+        img2.classList.add('hidden', 'rat2');
+        img2.setAttribute('src', "https://i.imgur.com/bUy4F1B.jpg");
+        cell.appendChild(img2);
+        
         const cells = document.querySelectorAll('.cell');
         cell.addEventListener('click', (e) => {
             cell.style.pointerEvents = 'none';
             cell.classList.add(gameFlow.currentPlayer.marker);
             board[e.target.id] = gameFlow.currentPlayer.marker;
-            cell.innerText = gameFlow.currentPlayer.marker;
+            
+            if (gameFlow.currentPlayer.marker === 'X') {
+                img1.classList.add('show');
+            } else {
+                img2.classList.add('show');
+            }
+            // cell.innerText = gameFlow.currentPlayer.marker;
             console.log(`${gameFlow.currentPlayer.name} selected cell ${e.target.id}`);
             console.log(board);
             gameFlow.nextPlayer();
             
         });
     }
-    let cells = document.querySelectorAll('.cell');
 
+    let cells = document.querySelectorAll('.cell');
+    let imgs = document.querySelectorAll('img');
     const clearBoard = () => {
         board = [
             '','','',
@@ -34,9 +52,13 @@ const gameBoard = (() => {
         ];
         cells.forEach((element) => {
             element.style.pointerEvents = 'auto';
-            element.innerText = '';
+            // element.innerText = '';
             element.classList.remove('X', 'O');
-        });  
+        }); 
+
+        imgs.forEach((element) => {
+            element.classList.remove('show');
+        });
     }
     
     return {board, gameboard, clearBoard};
@@ -76,7 +98,7 @@ const gameFlow = (() => {
 
     function resetGame() {
         this.isGameOver = false;
-        this.currentPlayer = player1;
+        currentPlayer = player1;
         this.remainingCells = 9;
         gameBoard.clearBoard();
     };
