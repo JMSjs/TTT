@@ -63,7 +63,7 @@ const gameBoard = (() => {
         cells.forEach((element) => {
             element.style.pointerEvents = 'auto';
             // element.innerText = '';
-            element.classList.remove('X', 'O');
+            element.classList.remove('X', 'O', 'highlight');
         }); 
 
         imgs.forEach((element) => {
@@ -71,6 +71,7 @@ const gameBoard = (() => {
         });
     }
     
+
     return {board, gameboard, clearBoard};
 })();
 
@@ -115,13 +116,16 @@ const gameFlow = (() => {
     }
 
     function checkWinner() {
-        winningRows.forEach((element, index) => {
-            if (gameBoard.board[element[0]] === this.currentPlayer.marker &&
-                gameBoard.board[element[1]] === this.currentPlayer.marker &&
-                gameBoard.board[element[2]] === this.currentPlayer.marker) {
+        winningRows.forEach((array) => {
+            if (gameBoard.board[array[0]] === this.currentPlayer.marker &&
+                gameBoard.board[array[1]] === this.currentPlayer.marker &&
+                gameBoard.board[array[2]] === this.currentPlayer.marker) {
                     domFeatures.displayMessage(`${this.currentPlayer.name} is the winner!`);
                     gameFlow.isGameOver = true;
+                    domFeatures.highlightWinnerCells(array);
+                    console.log(array + " are the winning cells");
             }
+
         })
     }
 
@@ -147,7 +151,13 @@ const domFeatures = (() => {
             messages.removeChild(messages.firstChild);
         } 
     }
+    const highlightWinnerCells = (array) => {
+        const cells = document.querySelectorAll('.cell');
+        array.forEach((element) => {
+            cells[element].classList.add('highlight'); 
+        });
+    }
 
-    return {displayMessage};
+    return {displayMessage, highlightWinnerCells};
 
 })();

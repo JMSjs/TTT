@@ -90,3 +90,8 @@ img {
     text-align: center;
 
 }
+
+.highlight {
+    filter: brightness(2);
+
+}
